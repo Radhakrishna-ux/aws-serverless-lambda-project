@@ -1,0 +1,20 @@
+import json
+import boto3
+from datetime import datetime
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('RadhaData')
+
+def lambda_handler(event, context):
+    
+    data = {
+        "id": str(datetime.now()),
+        "message": "Hello from Radha's Lambda Function"
+    }
+    
+    table.put_item(Item=data)
+
+    return {
+        'statusCode': 200,
+        'body': json.dumps('Data stored successfully!')
+    }
